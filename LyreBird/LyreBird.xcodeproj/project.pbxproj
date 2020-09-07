@@ -22,6 +22,8 @@
 		3B423CC42501439A004590D5 /* LyreBirdUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423CC32501439A004590D5 /* LyreBirdUITests.swift */; };
 		6D522295F77ACA7791644CFB /* Pods_LyreBird.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5EFDB2AF632B9DEFC4BB24 /* Pods_LyreBird.framework */; };
 		B858C58EA521137AF77AAC82 /* Pods_LyreBirdTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310F1D82A6F9B37BA1205CDF /* Pods_LyreBirdTests.framework */; };
+		F047F57025065EA500A61DD6 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F047F56E25065EA500A61DD6 /* FilterCell.swift */; };
+		F047F57125065EA500A61DD6 /* FilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F047F56F25065EA500A61DD6 /* FilterCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,8 @@
 		740A4EC0FCC9070D85EBC8A9 /* Pods_LyreBird_LyreBirdUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LyreBird_LyreBirdUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73C770B2BB0D8ADD52946CF /* Pods-LyreBird-LyreBirdUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyreBird-LyreBirdUITests.release.xcconfig"; path = "Target Support Files/Pods-LyreBird-LyreBirdUITests/Pods-LyreBird-LyreBirdUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E3B8DDB0BC596A19D919F010 /* Pods-LyreBirdTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyreBirdTests.debug.xcconfig"; path = "Target Support Files/Pods-LyreBirdTests/Pods-LyreBirdTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F047F56E25065EA500A61DD6 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
+		F047F56F25065EA500A61DD6 /* FilterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				3B21BEAA250415B900B01072 /* KeyFilter.swift */,
+				F047F56E25065EA500A61DD6 /* FilterCell.swift */,
+				F047F56F25065EA500A61DD6 /* FilterCell.xib */,
 			);
 			path = Modal;
 			sourceTree = "<group>";
@@ -330,6 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B423CAE2501439A004590D5 /* LaunchScreen.storyboard in Resources */,
+				F047F57125065EA500A61DD6 /* FilterCell.xib in Resources */,
 				3B423CAB2501439A004590D5 /* Assets.xcassets in Resources */,
 				3B423CA925014399004590D5 /* Main.storyboard in Resources */,
 			);
@@ -460,6 +467,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B423CA225014399004590D5 /* AppDelegate.swift in Sources */,
+				F047F57025065EA500A61DD6 /* FilterCell.swift in Sources */,
 				3B21BEAB250415B900B01072 /* KeyFilter.swift in Sources */,
 				3B21BEA7250411E100B01072 /* Request.swift in Sources */,
 				3B21BEAD250426B500B01072 /* Config.swift in Sources */,
