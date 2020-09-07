@@ -3,18 +3,25 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0CA2160871A67765B9C7D36D /* Pods_LyreBird_LyreBirdUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 740A4EC0FCC9070D85EBC8A9 /* Pods_LyreBird_LyreBirdUITests.framework */; };
+		3B21BEA5250411CF00B01072 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B21BEA4250411CF00B01072 /* Extentions.swift */; };
+		3B21BEA7250411E100B01072 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B21BEA6250411E100B01072 /* Request.swift */; };
+		3B21BEA9250411EE00B01072 /* Netwok.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B21BEA8250411EE00B01072 /* Netwok.swift */; };
+		3B21BEAB250415B900B01072 /* KeyFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B21BEAA250415B900B01072 /* KeyFilter.swift */; };
+		3B21BEAD250426B500B01072 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B21BEAC250426B500B01072 /* Config.swift */; };
+		3B274A442503F52200D2C467 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B274A432503F52200D2C467 /* Filters.swift */; };
 		3B423CA225014399004590D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423CA125014399004590D5 /* AppDelegate.swift */; };
-		3B423CA425014399004590D5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423CA325014399004590D5 /* SceneDelegate.swift */; };
-		3B423CA625014399004590D5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423CA525014399004590D5 /* ViewController.swift */; };
 		3B423CA925014399004590D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B423CA725014399004590D5 /* Main.storyboard */; };
 		3B423CAB2501439A004590D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B423CAA2501439A004590D5 /* Assets.xcassets */; };
 		3B423CAE2501439A004590D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B423CAC2501439A004590D5 /* LaunchScreen.storyboard */; };
 		3B423CB92501439A004590D5 /* LyreBirdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423CB82501439A004590D5 /* LyreBirdTests.swift */; };
 		3B423CC42501439A004590D5 /* LyreBirdUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423CC32501439A004590D5 /* LyreBirdUITests.swift */; };
+		6D522295F77ACA7791644CFB /* Pods_LyreBird.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5EFDB2AF632B9DEFC4BB24 /* Pods_LyreBird.framework */; };
+		B858C58EA521137AF77AAC82 /* Pods_LyreBirdTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310F1D82A6F9B37BA1205CDF /* Pods_LyreBirdTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,10 +42,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		310F1D82A6F9B37BA1205CDF /* Pods_LyreBirdTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LyreBirdTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B21BEA4250411CF00B01072 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
+		3B21BEA6250411E100B01072 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		3B21BEA8250411EE00B01072 /* Netwok.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Netwok.swift; sourceTree = "<group>"; };
+		3B21BEAA250415B900B01072 /* KeyFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyFilter.swift; sourceTree = "<group>"; };
+		3B21BEAC250426B500B01072 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		3B274A432503F52200D2C467 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		3B423C9E25014399004590D5 /* LyreBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyreBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B423CA125014399004590D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3B423CA325014399004590D5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3B423CA525014399004590D5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3B423CA825014399004590D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3B423CAA2501439A004590D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B423CAD2501439A004590D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +61,14 @@
 		3B423CBF2501439A004590D5 /* LyreBirdUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LyreBirdUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B423CC32501439A004590D5 /* LyreBirdUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyreBirdUITests.swift; sourceTree = "<group>"; };
 		3B423CC52501439A004590D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F5EFDB2AF632B9DEFC4BB24 /* Pods_LyreBird.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LyreBird.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		54D21B64B9540F46781EA71E /* Pods-LyreBird.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyreBird.debug.xcconfig"; path = "Target Support Files/Pods-LyreBird/Pods-LyreBird.debug.xcconfig"; sourceTree = "<group>"; };
+		55741801EFA0E3EF1B338F8F /* Pods-LyreBird.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyreBird.release.xcconfig"; path = "Target Support Files/Pods-LyreBird/Pods-LyreBird.release.xcconfig"; sourceTree = "<group>"; };
+		73AE1CF853CF06A7794000D0 /* Pods-LyreBirdTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyreBirdTests.release.xcconfig"; path = "Target Support Files/Pods-LyreBirdTests/Pods-LyreBirdTests.release.xcconfig"; sourceTree = "<group>"; };
+		73DF6A7B33E7B5006E02BA28 /* Pods-LyreBird-LyreBirdUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyreBird-LyreBirdUITests.debug.xcconfig"; path = "Target Support Files/Pods-LyreBird-LyreBirdUITests/Pods-LyreBird-LyreBirdUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		740A4EC0FCC9070D85EBC8A9 /* Pods_LyreBird_LyreBirdUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LyreBird_LyreBirdUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D73C770B2BB0D8ADD52946CF /* Pods-LyreBird-LyreBirdUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyreBird-LyreBirdUITests.release.xcconfig"; path = "Target Support Files/Pods-LyreBird-LyreBirdUITests/Pods-LyreBird-LyreBirdUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E3B8DDB0BC596A19D919F010 /* Pods-LyreBirdTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyreBirdTests.debug.xcconfig"; path = "Target Support Files/Pods-LyreBirdTests/Pods-LyreBirdTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D522295F77ACA7791644CFB /* Pods_LyreBird.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B858C58EA521137AF77AAC82 /* Pods_LyreBirdTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,12 +92,56 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CA2160871A67765B9C7D36D /* Pods_LyreBird_LyreBirdUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B274A3E2503F4B500D2C467 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				3B21BEA4250411CF00B01072 /* Extentions.swift */,
+				3B21BEA6250411E100B01072 /* Request.swift */,
+				3B21BEA8250411EE00B01072 /* Netwok.swift */,
+				3B21BEAC250426B500B01072 /* Config.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		3B274A3F2503F4BC00D2C467 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				3B21BEAA250415B900B01072 /* KeyFilter.swift */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		3B274A402503F4C400D2C467 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				3B423CAA2501439A004590D5 /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		3B274A412503F4C900D2C467 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3B274A432503F52200D2C467 /* Filters.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3B274A422503F4D100D2C467 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3B423CAC2501439A004590D5 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		3B423C9525014399004590D5 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +149,8 @@
 				3B423CB72501439A004590D5 /* LyreBirdTests */,
 				3B423CC22501439A004590D5 /* LyreBirdUITests */,
 				3B423C9F25014399004590D5 /* Products */,
+				E290D4B2E9D24D93F08DD520 /* Pods */,
+				3ED9F874ACF476F3F2DA0ADC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,12 +168,13 @@
 			isa = PBXGroup;
 			children = (
 				3B423CA125014399004590D5 /* AppDelegate.swift */,
-				3B423CA325014399004590D5 /* SceneDelegate.swift */,
-				3B423CA525014399004590D5 /* ViewController.swift */,
-				3B423CA725014399004590D5 /* Main.storyboard */,
-				3B423CAA2501439A004590D5 /* Assets.xcassets */,
-				3B423CAC2501439A004590D5 /* LaunchScreen.storyboard */,
+				3B274A422503F4D100D2C467 /* View */,
+				3B274A412503F4C900D2C467 /* Controller */,
+				3B274A3F2503F4BC00D2C467 /* Modal */,
+				3B274A3E2503F4B500D2C467 /* Utility */,
+				3B274A402503F4C400D2C467 /* Assets */,
 				3B423CAF2501439A004590D5 /* Info.plist */,
+				3B423CA725014399004590D5 /* Main.storyboard */,
 			);
 			path = LyreBird;
 			sourceTree = "<group>";
@@ -128,6 +197,29 @@
 			path = LyreBirdUITests;
 			sourceTree = "<group>";
 		};
+		3ED9F874ACF476F3F2DA0ADC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4F5EFDB2AF632B9DEFC4BB24 /* Pods_LyreBird.framework */,
+				740A4EC0FCC9070D85EBC8A9 /* Pods_LyreBird_LyreBirdUITests.framework */,
+				310F1D82A6F9B37BA1205CDF /* Pods_LyreBirdTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E290D4B2E9D24D93F08DD520 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				54D21B64B9540F46781EA71E /* Pods-LyreBird.debug.xcconfig */,
+				55741801EFA0E3EF1B338F8F /* Pods-LyreBird.release.xcconfig */,
+				73DF6A7B33E7B5006E02BA28 /* Pods-LyreBird-LyreBirdUITests.debug.xcconfig */,
+				D73C770B2BB0D8ADD52946CF /* Pods-LyreBird-LyreBirdUITests.release.xcconfig */,
+				E3B8DDB0BC596A19D919F010 /* Pods-LyreBirdTests.debug.xcconfig */,
+				73AE1CF853CF06A7794000D0 /* Pods-LyreBirdTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +227,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3B423CC82501439A004590D5 /* Build configuration list for PBXNativeTarget "LyreBird" */;
 			buildPhases = (
+				07A17E35855B7766A981B775 /* [CP] Check Pods Manifest.lock */,
 				3B423C9A25014399004590D5 /* Sources */,
 				3B423C9B25014399004590D5 /* Frameworks */,
 				3B423C9C25014399004590D5 /* Resources */,
+				2544DF0461F75EA6F04891E8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -152,6 +246,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3B423CCB2501439A004590D5 /* Build configuration list for PBXNativeTarget "LyreBirdTests" */;
 			buildPhases = (
+				7351A6AE9B4A7DCE03693FB0 /* [CP] Check Pods Manifest.lock */,
 				3B423CB02501439A004590D5 /* Sources */,
 				3B423CB12501439A004590D5 /* Frameworks */,
 				3B423CB22501439A004590D5 /* Resources */,
@@ -170,9 +265,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3B423CCE2501439A004590D5 /* Build configuration list for PBXNativeTarget "LyreBirdUITests" */;
 			buildPhases = (
+				E95A5747EF97EBEA2BE09F32 /* [CP] Check Pods Manifest.lock */,
 				3B423CBB2501439A004590D5 /* Sources */,
 				3B423CBC2501439A004590D5 /* Frameworks */,
 				3B423CBD2501439A004590D5 /* Resources */,
+				7F2758A9EE7D9F073AA1306C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -254,14 +351,121 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		07A17E35855B7766A981B775 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LyreBird-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2544DF0461F75EA6F04891E8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LyreBird/Pods-LyreBird-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LyreBird/Pods-LyreBird-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LyreBird/Pods-LyreBird-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7351A6AE9B4A7DCE03693FB0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LyreBirdTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7F2758A9EE7D9F073AA1306C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LyreBird-LyreBirdUITests/Pods-LyreBird-LyreBirdUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LyreBird-LyreBirdUITests/Pods-LyreBird-LyreBirdUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LyreBird-LyreBirdUITests/Pods-LyreBird-LyreBirdUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E95A5747EF97EBEA2BE09F32 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-LyreBird-LyreBirdUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3B423C9A25014399004590D5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3B423CA625014399004590D5 /* ViewController.swift in Sources */,
 				3B423CA225014399004590D5 /* AppDelegate.swift in Sources */,
-				3B423CA425014399004590D5 /* SceneDelegate.swift in Sources */,
+				3B21BEAB250415B900B01072 /* KeyFilter.swift in Sources */,
+				3B21BEA7250411E100B01072 /* Request.swift in Sources */,
+				3B21BEAD250426B500B01072 /* Config.swift in Sources */,
+				3B274A442503F52200D2C467 /* Filters.swift in Sources */,
+				3B21BEA5250411CF00B01072 /* Extentions.swift in Sources */,
+				3B21BEA9250411EE00B01072 /* Netwok.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,13 +570,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -420,25 +625,27 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		3B423CC92501439A004590D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54D21B64B9540F46781EA71E /* Pods-LyreBird.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D6Q72QVS55;
 				INFOPLIST_FILE = LyreBird/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -453,13 +660,14 @@
 		};
 		3B423CCA2501439A004590D5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55741801EFA0E3EF1B338F8F /* Pods-LyreBird.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = D6Q72QVS55;
 				INFOPLIST_FILE = LyreBird/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -474,6 +682,7 @@
 		};
 		3B423CCC2501439A004590D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E3B8DDB0BC596A19D919F010 /* Pods-LyreBirdTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -496,6 +705,7 @@
 		};
 		3B423CCD2501439A004590D5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73AE1CF853CF06A7794000D0 /* Pods-LyreBirdTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -518,6 +728,7 @@
 		};
 		3B423CCF2501439A004590D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73DF6A7B33E7B5006E02BA28 /* Pods-LyreBird-LyreBirdUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -538,6 +749,7 @@
 		};
 		3B423CD02501439A004590D5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D73C770B2BB0D8ADD52946CF /* Pods-LyreBird-LyreBirdUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

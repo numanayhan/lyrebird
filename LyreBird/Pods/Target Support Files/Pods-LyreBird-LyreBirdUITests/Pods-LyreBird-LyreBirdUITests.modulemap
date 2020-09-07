@@ -1,0 +1,6 @@
+framework module Pods_LyreBird_LyreBirdUITests {
+  umbrella header "Pods-LyreBird-LyreBirdUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

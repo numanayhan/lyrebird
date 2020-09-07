@@ -1,0 +1,6 @@
+framework module Pods_LyreBirdTests {
+  umbrella header "Pods-LyreBirdTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
