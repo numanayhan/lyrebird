@@ -24,7 +24,6 @@
 		B858C58EA521137AF77AAC82 /* Pods_LyreBirdTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310F1D82A6F9B37BA1205CDF /* Pods_LyreBirdTests.framework */; };
 		F047F57025065EA500A61DD6 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F047F56E25065EA500A61DD6 /* FilterCell.swift */; };
 		F047F57125065EA500A61DD6 /* FilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F047F56F25065EA500A61DD6 /* FilterCell.xib */; };
-		F0DE9A402507B11600EAF71D /* HistogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DE9A3F2507B11600EAF71D /* HistogramView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +73,6 @@
 		E3B8DDB0BC596A19D919F010 /* Pods-LyreBirdTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyreBirdTests.debug.xcconfig"; path = "Target Support Files/Pods-LyreBirdTests/Pods-LyreBirdTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F047F56E25065EA500A61DD6 /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		F047F56F25065EA500A61DD6 /* FilterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterCell.xib; sourceTree = "<group>"; };
-		F0DE9A3F2507B11600EAF71D /* HistogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistogramView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +110,6 @@
 				3B21BEA6250411E100B01072 /* Request.swift */,
 				3B21BEA8250411EE00B01072 /* Netwok.swift */,
 				3B21BEAC250426B500B01072 /* Config.swift */,
-				F0DE9A3F2507B11600EAF71D /* HistogramView.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -474,7 +471,6 @@
 				F047F57025065EA500A61DD6 /* FilterCell.swift in Sources */,
 				3B21BEAB250415B900B01072 /* KeyFilter.swift in Sources */,
 				3B21BEA7250411E100B01072 /* Request.swift in Sources */,
-				F0DE9A402507B11600EAF71D /* HistogramView.swift in Sources */,
 				3B21BEAD250426B500B01072 /* Config.swift in Sources */,
 				3B21BEA5250411CF00B01072 /* Extentions.swift in Sources */,
 				3B21BEA9250411EE00B01072 /* Netwok.swift in Sources */,

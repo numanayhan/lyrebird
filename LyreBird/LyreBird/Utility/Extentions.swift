@@ -11,6 +11,8 @@ import UIKit
 import ImageIO
 import CoreGraphics
 extension UIView{
+    // Anchor ile objenin yeri ayarlanıyor.
+
     func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
         
         translatesAutoresizingMaskIntoConstraints = false
@@ -39,6 +41,8 @@ extension UIView{
             heightAnchor.constraint(equalToConstant: height).isActive = true
         }
     }
+    //  Resim GraphicsImageRenderer ile convert edildi
+
      func asImage() -> UIImage? {
          if #available(iOS 10.0, *) {
              let renderer = UIGraphicsImageRenderer(bounds: bounds)
@@ -58,7 +62,7 @@ extension UIView{
     
    
 }
-//  Bitmap structure
+//  Bitmap structur oluşturuldu
 
 public struct PixelData {
     var a, r, g, b: UInt8
@@ -81,7 +85,7 @@ public struct PixelData {
         self.b = UInt8(v.b * 255 / div)
     }
 }
-//  Histogram structure
+//  Histogram structur oluşturuldu
 
 public struct IntData {
     var r, g, b: Int

@@ -15,76 +15,60 @@ struct FilterModal {
     var previewUrl:String
 }
 class Filters: UIViewController ,UIGestureRecognizerDelegate {
-    
-    let getPhoto : UIButton = {
-        let photo = UIButton()
-        photo.setTitle("Get Photo", for: .normal)
-        photo.setTitleColor(UIColor.white, for: .normal)
-        photo.addTarget(self, action: #selector(goChoose), for: .touchUpInside)
-        photo.titleLabel?.textAlignment = .center
-        photo.backgroundColor = .red
-        return photo
-    }()
-    var rotateGesture  = UIRotationGestureRecognizer()
-    var lastRotation   = CGFloat()
+     
     let filterImageView : UIImageView = {
-        var imageView  = UIImageView()
-        imageView.image = UIImage()
-        imageView.isUserInteractionEnabled = true
-        imageView.clipsToBounds = true
-        imageView.backgroundColor = .clear
-        imageView.contentMode = .scaleAspectFit
+        var iv  = UIImageView()
+        iv.image = UIImage()
+        iv.isUserInteractionEnabled = true
+        iv.clipsToBounds = true
+        iv.backgroundColor = .clear
+        iv.contentMode = .scaleAspectFit
         
-        return imageView
+        return iv
     }()
     let imageView : UIImageView = {
-        var imageView = UIImageView()
-        imageView.image = UIImage(named: "kapadokya")!
-        imageView.contentMode = .scaleToFill
-        return imageView
+        var iv = UIImageView()
+        iv.image = UIImage(named: "kapadokya")!
+        iv.contentMode = .scaleToFill
+        return iv
     }()
-    
+    lazy  var histogramView: UIImageView = {
+           var hv  = UIImageView()
+           hv.backgroundColor = .white
+           return hv
+     }()
     @IBOutlet weak var close: UIBarButtonItem!
     @IBOutlet weak var save: UIBarButtonItem!
     @IBOutlet weak var customView: UIView!
     @IBOutlet weak var filterCV: UICollectionView!
+    @IBOutlet weak var navbar: UINavigationItem!
     let request = Request()
     var filterResponse = [KeyFilter]()
-    @IBOutlet weak var navbar: UINavigationItem!
     var initialCenterPoint = CGPoint()
     var realmFilter = try! Realm()
     var filterData = [FilterProtocol]()
     var dataArray = [FilterModal]()
-    
+    var lastRotation   = CGFloat()
     let context = CIContext()
-    lazy  var histogramView: UIImageView = {
-        var hv  = UIImageView()
-        hv.backgroundColor = .white
-        return hv
-        
-    }()
+    var rotateGesture  = UIRotationGestureRecognizer()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         self.setupViews()
-        
-        
     }
     @IBAction func savePhoto(_ sender: UIBarButtonItem) {
-        //saved()
+        // Resim asImage ile Convert edilip üstüne eklenen resimler ile birleştirilmesi yapıldı.
+        // Tek bir context ile image oluşturuldu.
         guard let image = imageView.asImage() else { return  }
         saved(image)
-        
         
     }
     //MARK: - Add image to Library
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             // we got back an error!
-            showAlertWith(title: "Save error", message: error.localizedDescription)
+            showAlertWith(title: "Resim kaydedilemedi", message: error.localizedDescription)
         } else {
-            showAlertWith(title: "Saved!", message: "Your image has been saved to your photos.")
+            showAlertWith(title: "Kaydedildi", message: "Resim galeriye kaydedildi")
         }
     }
     
@@ -93,6 +77,7 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
     }
+    // Objeyi Tutma Metodu
     @objc func handlePinch(sender: UIPinchGestureRecognizer) {
         guard sender.view != nil else { return }
         
@@ -101,41 +86,36 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
             sender.scale = 1.0
         }
     }
-    @objc func handlePan(gestureRecognizer: UIPanGestureRecognizer) {
-        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-            
-            let translation = gestureRecognizer.translation(in: self.view)
-            // note: 'view' is optional and need to be unwrapped
-            gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
-            gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
-        }
-        
-    }
     
-    @objc func pinchRecognized(pinch: UIPinchGestureRecognizer) {
+    // Objeyi Çevirme Metodu
+    @objc func handleRotation(sender: UIRotationGestureRecognizer) {
+        guard sender.view != nil else { return }
         
-        if let view = pinch.view {
-            view.transform = view.transform.scaledBy(x: pinch.scale, y: pinch.scale)
-            pinch.scale = 1
+        if sender.state == .began || sender.state == .changed {
+            sender.view?.transform = sender.view!.transform.rotated(by: sender.rotation)
+            sender.rotation = 0
         }
     }
-    
-    @objc  func handleRotate(recognizer : UIRotationGestureRecognizer) {
-        if let view = recognizer.view {
-            view.transform = view.transform.rotated(by: recognizer.rotation)
-            recognizer.rotation = 0
+    //Objeyi  Kaydırma Metodu
+    @objc func handlePan(_ pan: UIPanGestureRecognizer) {
+        if pan.state == .began {
+            self.initialCenterPoint = self.filterImageView.center
         }
-    }
-    @objc func gestureRecognizer(_: UIGestureRecognizer,
-                                 shouldRecognizeSimultaneouslyWith shouldRecognizeSimultaneouslyWithGestureRecognizer:UIGestureRecognizer) -> Bool {
-        return true
+        let translation = pan.translation(in: view)
+        if pan.state != .cancelled {
+            let newCenter = CGPoint(x: initialCenterPoint.x + translation.x, y: initialCenterPoint.y + translation.y)
+            self.filterImageView.center = newCenter
+        } else {
+            self.filterImageView.center = initialCenterPoint
+        }
     }
     func setupViews(){
-        self.getPhotos()
+        self.setPhotos()
         self.fetchFilters()
         self.filterCollectionView()
     }
     func filterCollectionView(){
+        //Collection View Register edildi.
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -147,12 +127,15 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
     }
     
     func saved(_ image : UIImage){
+        // Resim galeriye kaydedilmesi yapıldı.
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
         
         
     }
-    func getPhotos(){
+    func setPhotos(){
         
+        // Defaul bir resim eklendi.
+        // Eğer istenirse bu resim tap gesture ile aşağıda yazdığım kütüphaneden resim seçilmesi metotdu çağrılabilir. goChoose()
         
         customView.backgroundColor = UIColor.purple
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -161,130 +144,88 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
         customView.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
         imageView.addSubview(filterImageView)
         filterImageView.frame = CGRect.init(x: self.imageView.center.x, y: self.imageView.center.y,  width:100, height:100)
-      
-         
+        
+        
         
     }
-    func pixel(in image: UIImage, at point: CGPoint) -> (UInt8, UInt8, UInt8, UInt8)? {
-        let width = Int(image.size.width)
-        let height = Int(image.size.height)
-        let x = Int(point.x)
-        let y = Int(point.y)
-        guard x < width && y < height else {
-            return nil
-        }
-        guard let cfData:CFData = image.cgImage?.dataProvider?.data, let pointer = CFDataGetBytePtr(cfData) else {
-            return nil
-        }
-        let bytesPerPixel = 4
-        let offset = (x + y * width) * bytesPerPixel
-        return (pointer[offset], pointer[offset + 1], pointer[offset + 2], pointer[offset + 3])
-    }
-
-   
-    
     @objc func goChoose(){
+        // Resim seçilmesi için extension ile galeri veya kamera açılması eklendi.
         ImagePickerManagerUpload().pickImage(self){ image in
             print(image)
+            // Seçilen resim ise imageView ile ekrana basıldı.
             self.imageView.image = image
         }
     }
     override var preferredStatusBarStyle : UIStatusBarStyle {
-        return UIStatusBarStyle.default
+        return UIStatusBarStyle.lightContent
     }
     func fetchFilters(){
         //self.realmFilter.beginWrite()
         //realmFilter.delete(self.realmFilter.objects(KeyFilter.self))
         //try! self.realmFilter.commitWrite()
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
         
-        //print(Realm.Configuration.defaultConfiguration.fileURL)
+        // Filtre Rest Api için fetch metodu yapıldı.
+        // İnternet kontrolü yapıldı.
         if Network.isConnectedToNetwork() == true {
+            //Config.FILTERS ile Metot public bir class ile çağrıldı.
             request.getRequest( api: Config.FILTERS , completion : { response in
                 DispatchQueue.main.async {
+                    //DispatchQueue ile sync yapıldı.
                     let jsonDecoder = JSONDecoder()
+                    //filterData model ile decode edilen bir liste olarak eklendi.
                     self.filterData = try! jsonDecoder.decode([FilterProtocol].self, from: response as! Data)
                     self.dataArray.append(FilterModal.init(title: "FX 1" , iconUrl: "none", previewUrl: "none"))
+                    // liste her eleman için bir model atandı
+                    // Url ile alınan elemanın değerleri FilterModal  ile dataArray listesine eklendi.
                     for (index,filter)  in (self.filterData as NSArray as! [FilterProtocol]).enumerated() {
                         self.dataArray.append(FilterModal.init(title: "FX " + String(index + 2), iconUrl: filter.overlayUrl!, previewUrl: filter.overlayPreviewIconUrl!))
-                        
                     }
+                     //  Collection view içine alınacak data yenilendi.
                     self.filterCV.reloadData()
-                    
                     let filterModel = KeyFilter()
                     self.realmFilter.beginWrite()
-                    
+                     //  Realm data base ile realmFilter listesine alınan Filtre verileri kaydedildi.
                     for filter in (self.filterData as NSArray as! [FilterProtocol]) {
-                        
                         filterModel.name = filter.overlayName
                         filterModel.id =  "\(filter.overlayId!)"
                         filterModel.previewIcon = filter.overlayPreviewIconUrl
                         filterModel.icon = filter.overlayUrl
                         self.realmFilter.add(filterModel)
-                        print(filterModel.name!)
                     }
-                    
                 }
             })
         }else{
             /*let realm =  self.realmFilter.objects(KeyFilter.self)
              //print(realm)
              for item in realm{
-             print(item.name)
-             
-             
              }*/
         }
     }
-    @objc func handleRotation(sender: UIRotationGestureRecognizer) {
-        guard sender.view != nil else { return }
-        
-        if sender.state == .began || sender.state == .changed {
-            sender.view?.transform = sender.view!.transform.rotated(by: sender.rotation)
-            sender.rotation = 0
-        }
-    }
-    @objc func handlePan(_ pan: UIPanGestureRecognizer) {
-        if pan.state == .began {
-            self.initialCenterPoint = self.filterImageView.center
-        }
-        
-        let translation = pan.translation(in: view)
-        
-        if pan.state != .cancelled {
-            let newCenter = CGPoint(x: initialCenterPoint.x + translation.x, y: initialCenterPoint.y + translation.y)
-            self.filterImageView.center = newCenter
-        } else {
-            self.filterImageView.center = initialCenterPoint
-        }
-    }
     
-    func setupLayout() {
-        NSLayoutConstraint.activate([
-            self.filterImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            self.filterImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            self.filterImageView.widthAnchor.constraint(equalToConstant: 200),
-            self.filterImageView.heightAnchor.constraint(equalToConstant: 200)
-        ])
-    }
+    
     @IBAction func makeHistogram(_ sender: UIBarButtonItem) {
         convertHistogram()
     }
+    // Resmi Histogram Filtresi Dönüştürme
     @objc func convertHistogram(){
-           
-         let sourceCGImage = imageView.image?.cgImage
-               let histData = calculateHistogram(fromImage: sourceCGImage!)
-               let imageHist = CIImage(cgImage: imageFromARGB32Bitmap(pixels: histData, width: 256, height: 1)!)
-               
-               let histImage = histogramDisplayFilter(imageHist, height: 200, highLimit: 1.0, lowLimit: 0.0)
-               let cgImage = context.createCGImage(histImage!, from: histImage!.extent)
-               let uiImage = UIImage(cgImage: cgImage!)
+        
+        let sourceCGImage = imageView.image?.cgImage
+        let histData = calculateHistogram(fromImage: sourceCGImage!)
+        // Resmi ARGB32Bitmap ile dönüştürme eklendi.
+        let imageHist = CIImage(cgImage: imageFromARGB32Bitmap(pixels: histData, width: 256, height: 1)!)
+        // Histogram cgImage ile filtre dönüşümü yapıldı.
+        let histImage = histogramDisplayFilter(imageHist, height: 200, highLimit: 1.0, lowLimit: 0.0)
+        let cgImage = context.createCGImage(histImage!, from: histImage!.extent)
+        let uiImage = UIImage(cgImage: cgImage!)
         
         histogramView.image = uiImage
         imageView.addSubview(histogramView)
         histogramView.anchor(top: nil, left: nil, bottom:imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 50)
         histogramView.frame = CGRect.init(x: 0, y: 0, width: 100, height: 50)
-         
+        
     }
+    // Histogram Filtrresi CIFilter özellikleri ile limitleri verildi. 100 ile 1 arasında değerler tanımlandı.
     func histogramDisplayFilter(_ input: CIImage, height: Float = 100, highLimit: Float = 1.0, lowLimit: Float = 0.0) -> CIImage?
     {
         let filter = CIFilter(name:"CIHistogramDisplayFilter")
@@ -296,7 +237,7 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
     }
     
     func calculateHistogram(fromImage image: CGImage) -> [PixelData] {
-    
+        
         var hist : [IntData] = Array(repeating: IntData(), count: 256)
         
         let pixelData = image.dataProvider!.data
@@ -340,17 +281,21 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
 extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // Collection view  elemanın boyutu verildi.
         return CGSize(width: 90, height: 120)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // Filtre listesinin eleman sayısı verildi.
         return dataArray.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as! FilterCell
+        // Filtre listesinin  ilk elemanı için resim locale asset içinden verildi
         if indexPath.row == 0{
             let margin:CGFloat = 12
             cell.iconView.image = UIImage.init(named: "none")!.withInset( UIEdgeInsets(top: margin, left: margin, bottom: margin, right: margin))
         }
+        // Filtre listesinin  her  elemanı için resmin url alındı Alamofire ile donwload edildi ve öncesinde internet kontrolü yapıldı.
         if (self.dataArray[indexPath.row].previewUrl  != ""){
             let imageURL = self.dataArray[indexPath.row].previewUrl
             if Network.isConnectedToNetwork() == true {
@@ -368,53 +313,53 @@ extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
         }
         return cell
     }
-    func imageRecolor(image: UIImage, withColor color: UIColor) -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(CGSize.init(width: image.size.width, height: image.size.height), false, image.scale)
-        let context = UIGraphicsGetCurrentContext()
-        color.set()
-    context!.translateBy(x: 0, y: image.size.height)
-    context!.scaleBy(x: 1, y: -1)
-    let rect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
-    context!.clip(to: rect, mask: image.cgImage!)
-    context!.fill(rect)
-        let coloredImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-    return coloredImage!
-    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        // collection view içine FilterCell ile gelen her eleman extend edildi.
         if  let cell = collectionView.cellForItem(at: indexPath) as? FilterCell {
-            if indexPath.row == 0 {
-                cell.isSelected = false
-            }
+            //MARK
+            // index ile gelen listeden ilk eleman çıkarıldı
             if indexPath.row != 0 {
+                //MARK
+                // İnternet kontrolü yapıldı
                 if Network.isConnectedToNetwork() == true {
                     let imageURL = cell.iconUrl!
+                    //MARK
+                    // İnternetten resmin URL download edilmesi eklendi.
                     Alamofire.request(imageURL).responseImage { response in
                         if let image = response.result.value {
-                            
+                            //MARK
+                            //imageView filtredeki  resimler index sırasına göre eklendi.
                             self.filterImageView.image = image
                             self.filterImageView.frame = CGRect.init(x: self.imageView.center.x, y: self.imageView.center.y,  width: 200, height: 200)
+                            //MARK
+                            //imageView dokunme ve kontrol edilebilir özellik eklendi.
                             self.filterImageView.translatesAutoresizingMaskIntoConstraints = false
                             self.filterImageView.isUserInteractionEnabled = true
                             self.filterImageView.isMultipleTouchEnabled = true
-                            
                             self.imageView.addSubview(self.filterImageView)
+                            //MARK
+                            //imageView  merkezde olması eklendi.
                             self.imageView.centerXAnchor.constraint(equalTo: self.filterImageView.centerXAnchor).isActive = true
                             self.imageView.centerYAnchor.constraint(equalTo: self.filterImageView.centerYAnchor).isActive = true
-                            
+                            //MARK
+                            //Dönme kontrolü Gesture ile eklendi.
                             let rotate = UIRotationGestureRecognizer(target: self, action: #selector(self.handleRotation(sender:)))
                             self.filterImageView.addGestureRecognizer(rotate)
+                            //MARK
+                            //Büyütme kontrolü Gesture ile eklendi.
                             let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinch(sender:)))
                             self.filterImageView.addGestureRecognizer(pinch)
+                            //Kaydırma kontrolü Gesture ile eklendi.
                             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePan(_:)))
                             self.filterImageView.addGestureRecognizer(panGesture)
-                               
+                            
                         }
                     }
                 }
             }else  if indexPath.row == 0{
-                
+                //MARK
+                // ilk Filtre olmaması için UIImage() boş tanımlandı ve imageView içine eklendi
                 self.imageView.addSubview(self.filterImageView)
                 self.filterImageView.frame = CGRect.init(x: self.imageView.center.x, y: self.imageView.center.y,  width: 200, height: 200)
                 self.filterImageView.image =  UIImage()
@@ -423,10 +368,13 @@ extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
             
         }
     } 
-     
+    
 } 
 class ImagePickerManagerUpload : NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-    
+    //MARK :
+    // Resimler seçmek için picker ve navigation eklendi.
+    // Sonra ise Galeri ve Kamera ile seçenek için alert eklendi.
+    // Seçilen resim callback ile atandı.
     var picker = UIImagePickerController();
     var alert = UIAlertController(title: "Select Photo", message: nil, preferredStyle: .actionSheet)
     var viewController: UIViewController?
