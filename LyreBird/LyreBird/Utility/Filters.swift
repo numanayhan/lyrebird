@@ -29,6 +29,7 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
     let imageView : UIImageView = {
         var iv = UIImageView()
         iv.image = UIImage(named: "kapadokya")!
+        iv.isUserInteractionEnabled = true
         iv.contentMode = .scaleToFill
         return iv
     }()
@@ -54,6 +55,8 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupViews()
+        
+        
     }
     @IBAction func savePhoto(_ sender: UIBarButtonItem) {
         // Resim asImage ile Convert edilip üstüne eklenen resimler ile birleştirilmesi yapıldı.
@@ -89,10 +92,8 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
     
     // Objeyi Çevirme Metodu
     @objc func handleRotation(sender: UIRotationGestureRecognizer) {
-        guard sender.view != nil else { return }
-        
-        if sender.state == .began || sender.state == .changed {
-            sender.view?.transform = sender.view!.transform.rotated(by: sender.rotation)
+        if let view = sender.view {
+            view.transform = view.transform.rotated(by: sender.rotation)
             sender.rotation = 0
         }
     }
@@ -277,6 +278,24 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
         
         return cgImage
     }
+    @objc func handleImage(sender: UIRotationGestureRecognizer) {
+          if let view = sender.view {
+              view.transform = view.transform.rotated(by: sender.rotation)
+              sender.rotation = 0
+          }
+      }
+    
+    @objc  func handleRotate(recognizer : UIRotationGestureRecognizer) {
+         if let view = recognizer.view {
+             view.transform = view.transform.rotated(by: recognizer.rotation)
+             recognizer.rotation = 0
+         }
+     }
+     @objc func gestureRecognizer(_: UIGestureRecognizer,
+         shouldRecognizeSimultaneouslyWith shouldRecognizeSimultaneouslyWithGestureRecognizer:UIGestureRecognizer) -> Bool {
+         return true
+     }
+    
 }
 extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate{
     
@@ -332,11 +351,15 @@ extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
                             //imageView filtredeki  resimler index sırasına göre eklendi.
                             self.filterImageView.image = image
                             self.filterImageView.frame = CGRect.init(x: self.imageView.center.x, y: self.imageView.center.y,  width: 200, height: 200)
+                            self.filterImageView.translatesAutoresizingMaskIntoConstraints = false
+                             self.filterImageView.transform = CGAffineTransform(scaleX: 2, y: 2)
+                            self.filterImageView.transform = CGAffineTransform(translationX: -256, y: -256)
+                            self.filterImageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+                            self.filterImageView.transform = CGAffineTransform.identity
+                            
                             //MARK
                             //imageView dokunme ve kontrol edilebilir özellik eklendi.
                             self.filterImageView.translatesAutoresizingMaskIntoConstraints = false
-                            self.filterImageView.isUserInteractionEnabled = true
-                            self.filterImageView.isMultipleTouchEnabled = true
                             self.imageView.addSubview(self.filterImageView)
                             //MARK
                             //imageView  merkezde olması eklendi.
@@ -344,9 +367,8 @@ extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
                             self.imageView.centerYAnchor.constraint(equalTo: self.filterImageView.centerYAnchor).isActive = true
                             //MARK
                             //Dönme kontrolü Gesture ile eklendi.
-                            let rotate = UIRotationGestureRecognizer(target: self, action: #selector(self.handleRotation(sender:)))
-                            self.filterImageView.addGestureRecognizer(rotate)
-                            //MARK
+                             let rotate = UIRotationGestureRecognizer.init(target: self , action: #selector(self.handleImage(sender:)))
+                                self.filterImageView.addGestureRecognizer(rotate) //MARK
                             //Büyütme kontrolü Gesture ile eklendi.
                             let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.handlePinch(sender:)))
                             self.filterImageView.addGestureRecognizer(pinch)
