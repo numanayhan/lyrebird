@@ -50,7 +50,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="90Z-pd-tEG">
                         <barButtonItem key="leftBarButtonItem" title="Close" image="close" id="nVC-Kv-Rxx"/>
-                        <barButtonItem key="rightBarButtonItem" title="Save" image="save" id="Tgm-sB-mJh"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" image="save" id="Tgm-sB-mJh">
+                            <connections>
+                                <action selector="saveLocal:" destination="BYZ-38-t0r" id="8Zj-Fb-pnf"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="close" destination="nVC-Kv-Rxx" id="iNO-74-H3M"/>

@@ -37,5 +37,12 @@ extension UIView{
             heightAnchor.constraint(equalToConstant: height).isActive = true
         }
     }
+    func asImage() -> UIImage?{
+           let renderer = UIGraphicsImageRenderer(bounds: bounds)
+           return renderer.image { (ctx) in
+               layer.render(in: ctx.cgContext)
+           }
+       }
+    
     
 }

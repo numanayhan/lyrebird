@@ -55,17 +55,17 @@ class Filters: UIViewController {
     var dataArray = [FilterModal]()
     override func viewDidLoad() {
         super.viewDidLoad()
-         
-        
-       
-        self.setupViews()
-        
+        self.setupViews() 
     }
     @objc func handleImage(sender: UIRotationGestureRecognizer) {
         if let view = sender.view {
             view.transform = view.transform.rotated(by: sender.rotation)
             sender.rotation = 0
         }
+    }
+    @IBAction func saveLocal(_ sender: UIBarButtonItem) {
+        let image = self.imageView.asImage()
+        self.saveLocals(outImage: image)
     }
     func setupViews(){
         self.getPhotos()
@@ -187,17 +187,14 @@ extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
                 if Network.isConnectedToNetwork() == true {
                     let imageURL = cell.iconUrl!
                     Alamofire.request(imageURL).responseImage { response in
-                        if let image = response.result.value {
-                            //cell.iconView.image = image
-                            
+                        if let image = response.result.value { 
                             self.customView.addSubview(self.filterImageView)
                             self.filterImageView.anchor(top: nil, left: nil, bottom:nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 100)
                             self.filterImageView.image =  image
                             self.customView.contentMode = .center
-                            
                             let rotate = UIRotationGestureRecognizer.init(target: self , action: #selector(self.handleImage(sender:)))
                             self.filterImageView.addGestureRecognizer(rotate)
-                             
+                            
                         }
                     }
                 }
@@ -211,6 +208,27 @@ extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
              */
             
         }
+    }
+    func saveLocals( outImage: UIImage?){
+         
+        guard let selectedImage = outImage else {
+            print("Image not found!")
+            return
+        }
+        UIImageWriteToSavedPhotosAlbum(selectedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // we got back an error!
+            showAlertWith(title: "Save error", message: error.localizedDescription)
+        } else {
+            showAlertWith(title: "Saved!", message: "Your image has been saved to your photos.")
+        }
+    }
+    func showAlertWith(title: String, message: String){
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
     }
 }
 
