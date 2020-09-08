@@ -13,13 +13,13 @@
 		3B21BEA9250411EE00B01072 /* Netwok.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B21BEA8250411EE00B01072 /* Netwok.swift */; };
 		3B21BEAB250415B900B01072 /* KeyFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B21BEAA250415B900B01072 /* KeyFilter.swift */; };
 		3B21BEAD250426B500B01072 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B21BEAC250426B500B01072 /* Config.swift */; };
-		3B274A442503F52200D2C467 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B274A432503F52200D2C467 /* Filters.swift */; };
 		3B423CA225014399004590D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423CA125014399004590D5 /* AppDelegate.swift */; };
-		3B423CA925014399004590D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B423CA725014399004590D5 /* Main.storyboard */; };
 		3B423CAB2501439A004590D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B423CAA2501439A004590D5 /* Assets.xcassets */; };
 		3B423CAE2501439A004590D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B423CAC2501439A004590D5 /* LaunchScreen.storyboard */; };
 		3B423CB92501439A004590D5 /* LyreBirdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423CB82501439A004590D5 /* LyreBirdTests.swift */; };
 		3B423CC42501439A004590D5 /* LyreBirdUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B423CC32501439A004590D5 /* LyreBirdUITests.swift */; };
+		3B62D7742506B22000AABC44 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B62D7732506B22000AABC44 /* Filters.swift */; };
+		3B62D7762506B26600AABC44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B62D7752506B26600AABC44 /* Main.storyboard */; };
 		6D522295F77ACA7791644CFB /* Pods_LyreBird.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5EFDB2AF632B9DEFC4BB24 /* Pods_LyreBird.framework */; };
 		B858C58EA521137AF77AAC82 /* Pods_LyreBirdTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 310F1D82A6F9B37BA1205CDF /* Pods_LyreBirdTests.framework */; };
 		F047F57025065EA500A61DD6 /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F047F56E25065EA500A61DD6 /* FilterCell.swift */; };
@@ -50,10 +50,8 @@
 		3B21BEA8250411EE00B01072 /* Netwok.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Netwok.swift; sourceTree = "<group>"; };
 		3B21BEAA250415B900B01072 /* KeyFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyFilter.swift; sourceTree = "<group>"; };
 		3B21BEAC250426B500B01072 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		3B274A432503F52200D2C467 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		3B423C9E25014399004590D5 /* LyreBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyreBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B423CA125014399004590D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3B423CA825014399004590D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3B423CAA2501439A004590D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B423CAD2501439A004590D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B423CAF2501439A004590D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,6 +61,8 @@
 		3B423CBF2501439A004590D5 /* LyreBirdUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LyreBirdUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B423CC32501439A004590D5 /* LyreBirdUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyreBirdUITests.swift; sourceTree = "<group>"; };
 		3B423CC52501439A004590D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B62D7732506B22000AABC44 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Filters.swift; path = LyreBird/Utility/Filters.swift; sourceTree = SOURCE_ROOT; };
+		3B62D7752506B26600AABC44 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4F5EFDB2AF632B9DEFC4BB24 /* Pods_LyreBird.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LyreBird.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		54D21B64B9540F46781EA71E /* Pods-LyreBird.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyreBird.debug.xcconfig"; path = "Target Support Files/Pods-LyreBird/Pods-LyreBird.debug.xcconfig"; sourceTree = "<group>"; };
 		55741801EFA0E3EF1B338F8F /* Pods-LyreBird.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyreBird.release.xcconfig"; path = "Target Support Files/Pods-LyreBird/Pods-LyreBird.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 		3B274A412503F4C900D2C467 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3B274A432503F52200D2C467 /* Filters.swift */,
+				3B62D7732506B22000AABC44 /* Filters.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -180,7 +180,7 @@
 				3B274A3E2503F4B500D2C467 /* Utility */,
 				3B274A402503F4C400D2C467 /* Assets */,
 				3B423CAF2501439A004590D5 /* Info.plist */,
-				3B423CA725014399004590D5 /* Main.storyboard */,
+				3B62D7752506B26600AABC44 /* Main.storyboard */,
 			);
 			path = LyreBird;
 			sourceTree = "<group>";
@@ -338,7 +338,7 @@
 				3B423CAE2501439A004590D5 /* LaunchScreen.storyboard in Resources */,
 				F047F57125065EA500A61DD6 /* FilterCell.xib in Resources */,
 				3B423CAB2501439A004590D5 /* Assets.xcassets in Resources */,
-				3B423CA925014399004590D5 /* Main.storyboard in Resources */,
+				3B62D7762506B26600AABC44 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,11 +467,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B423CA225014399004590D5 /* AppDelegate.swift in Sources */,
+				3B62D7742506B22000AABC44 /* Filters.swift in Sources */,
 				F047F57025065EA500A61DD6 /* FilterCell.swift in Sources */,
 				3B21BEAB250415B900B01072 /* KeyFilter.swift in Sources */,
 				3B21BEA7250411E100B01072 /* Request.swift in Sources */,
 				3B21BEAD250426B500B01072 /* Config.swift in Sources */,
-				3B274A442503F52200D2C467 /* Filters.swift in Sources */,
 				3B21BEA5250411CF00B01072 /* Extentions.swift in Sources */,
 				3B21BEA9250411EE00B01072 /* Netwok.swift in Sources */,
 			);
@@ -509,14 +509,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		3B423CA725014399004590D5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3B423CA825014399004590D5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3B423CAC2501439A004590D5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -651,7 +643,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = D6Q72QVS55;
+				DEVELOPMENT_TEAM = MZRFR72A7G;
 				INFOPLIST_FILE = LyreBird/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -673,7 +665,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = D6Q72QVS55;
+				DEVELOPMENT_TEAM = MZRFR72A7G;
 				INFOPLIST_FILE = LyreBird/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (

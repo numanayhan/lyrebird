@@ -8,7 +8,6 @@
 
 import Foundation
 
-class Config{
-    
+class Config{ 
     public static let FILTERS = "https://lyrebirdstudio.s3-us-west-2.amazonaws.com/candidates/overlay.json";
 }
