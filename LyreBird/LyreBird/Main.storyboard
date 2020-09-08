@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Yqf-uv-jXp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Yqf-uv-jXp">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -48,21 +48,24 @@
                         <color key="backgroundColor" name="background"/>
                         <viewLayoutGuide key="safeArea" id="xf9-Km-pXP"/>
                     </view>
-<<<<<<< HEAD:LyreBird/LyreBird/Base.lproj/Main.storyboard
-                    <navigationItem key="navigationItem" id="90Z-pd-tEG">
-                        <barButtonItem key="leftBarButtonItem" title="Close" image="close" id="nVC-Kv-Rxx"/>
-                        <barButtonItem key="rightBarButtonItem" title="Save" image="save" id="Tgm-sB-mJh">
-                            <connections>
-                                <action selector="saveLocal:" destination="BYZ-38-t0r" id="8Zj-Fb-pnf"/>
-=======
                     <navigationItem key="navigationItem" id="7Yc-6s-cFr">
-                        <barButtonItem key="leftBarButtonItem" title="Close" image="close" id="c8g-IJ-Te2"/>
-                        <barButtonItem key="rightBarButtonItem" title="Save" image="save" id="lSO-A9-4qp">
-                            <connections>
-                                <action selector="savePhoto:" destination="mcT-5a-WcQ" id="a6c-bP-9U9"/>
->>>>>>> d0b543a033fae8d58af9c48346ee1002d3c41580:LyreBird/LyreBird/Main.storyboard
-                            </connections>
+                        <barButtonItem key="leftBarButtonItem" title="Close" image="close" id="c8g-IJ-Te2">
+                            <color key="tintColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Save" image="save" id="lSO-A9-4qp">
+                                <color key="tintColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="savePhoto:" destination="mcT-5a-WcQ" id="a6c-bP-9U9"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="play" id="G8p-sz-9gG">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="makeHistogram:" destination="mcT-5a-WcQ" id="PKm-Fu-heX"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="close" destination="c8g-IJ-Te2" id="J92-5G-pAN"/>

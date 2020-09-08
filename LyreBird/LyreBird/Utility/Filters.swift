@@ -7,6 +7,8 @@ import Alamofire
 import AlamofireImage
 import ImageIO
 import CoreGraphics
+import Accelerate
+
 struct FilterModal {
     var title: String
     var iconUrl:String
@@ -32,7 +34,7 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
         imageView.clipsToBounds = true
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
-       
+        
         return imageView
     }()
     let imageView : UIImageView = {
@@ -46,26 +48,34 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
     @IBOutlet weak var save: UIBarButtonItem!
     @IBOutlet weak var customView: UIView!
     @IBOutlet weak var filterCV: UICollectionView!
-    
     let request = Request()
     var filterResponse = [KeyFilter]()
     @IBOutlet weak var navbar: UINavigationItem!
-    
     var initialCenterPoint = CGPoint()
     var realmFilter = try! Realm()
     var filterData = [FilterProtocol]()
     var dataArray = [FilterModal]()
+    
+    let context = CIContext()
+    lazy  var histogramView: UIImageView = {
+        var hv  = UIImageView()
+        hv.backgroundColor = .white
+        return hv
+        
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        
         
         self.setupViews()
-         
-               
+        
+        
     }
     @IBAction func savePhoto(_ sender: UIBarButtonItem) {
-        saved()
-       
+        //saved()
+        guard let image = imageView.asImage() else { return  }
+        saved(image)
+        
         
     }
     //MARK: - Add image to Library
@@ -77,53 +87,53 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
             showAlertWith(title: "Saved!", message: "Your image has been saved to your photos.")
         }
     }
-
+    
     func showAlertWith(title: String, message: String){
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
     }
     @objc func handlePinch(sender: UIPinchGestureRecognizer) {
-             guard sender.view != nil else { return }
-                 
-                 if sender.state == .began || sender.state == .changed {
-                     sender.view?.transform = (sender.view?.transform.scaledBy(x: sender.scale, y: sender.scale))!
-                     sender.scale = 1.0
-                 }
-       }
+        guard sender.view != nil else { return }
+        
+        if sender.state == .began || sender.state == .changed {
+            sender.view?.transform = (sender.view?.transform.scaledBy(x: sender.scale, y: sender.scale))!
+            sender.scale = 1.0
+        }
+    }
     @objc func handlePan(gestureRecognizer: UIPanGestureRecognizer) {
-         if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
-
-             let translation = gestureRecognizer.translation(in: self.view)
-             // note: 'view' is optional and need to be unwrapped
-             gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
-             gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
-         }
-
-     }
-
-     @objc func pinchRecognized(pinch: UIPinchGestureRecognizer) {
-
-         if let view = pinch.view {
-             view.transform = view.transform.scaledBy(x: pinch.scale, y: pinch.scale)
-             pinch.scale = 1
-         }
-     }
-
+        if gestureRecognizer.state == .began || gestureRecognizer.state == .changed {
+            
+            let translation = gestureRecognizer.translation(in: self.view)
+            // note: 'view' is optional and need to be unwrapped
+            gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x + translation.x, y: gestureRecognizer.view!.center.y + translation.y)
+            gestureRecognizer.setTranslation(CGPoint.zero, in: self.view)
+        }
+        
+    }
+    
+    @objc func pinchRecognized(pinch: UIPinchGestureRecognizer) {
+        
+        if let view = pinch.view {
+            view.transform = view.transform.scaledBy(x: pinch.scale, y: pinch.scale)
+            pinch.scale = 1
+        }
+    }
+    
     @objc  func handleRotate(recognizer : UIRotationGestureRecognizer) {
-         if let view = recognizer.view {
-             view.transform = view.transform.rotated(by: recognizer.rotation)
-             recognizer.rotation = 0
-         }
-     }
-     @objc func gestureRecognizer(_: UIGestureRecognizer,
-         shouldRecognizeSimultaneouslyWith shouldRecognizeSimultaneouslyWithGestureRecognizer:UIGestureRecognizer) -> Bool {
-         return true
-     }
+        if let view = recognizer.view {
+            view.transform = view.transform.rotated(by: recognizer.rotation)
+            recognizer.rotation = 0
+        }
+    }
+    @objc func gestureRecognizer(_: UIGestureRecognizer,
+                                 shouldRecognizeSimultaneouslyWith shouldRecognizeSimultaneouslyWithGestureRecognizer:UIGestureRecognizer) -> Bool {
+        return true
+    }
     func setupViews(){
         self.getPhotos()
-        //self.fetchFilters()
-        //self.filterCollectionView()
+        self.fetchFilters()
+        self.filterCollectionView()
     }
     func filterCollectionView(){
         let layout = UICollectionViewFlowLayout()
@@ -136,43 +146,42 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
         self.filterCV.register(FilterCell.nib, forCellWithReuseIdentifier: FilterCell.identifier)
     }
     
-    func saved(){
+    func saved(_ image : UIImage){
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
         
-         
-               guard let selectedImage = imageView.image else {
-                       print("Image not found!")
-                       return
-                   }
-               UIImageWriteToSavedPhotosAlbum(selectedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
-                
         
     }
     func getPhotos(){
         
-          
+        
         customView.backgroundColor = UIColor.purple
         imageView.translatesAutoresizingMaskIntoConstraints = false
         customView.addSubview(imageView)
         imageView.anchor(top: customView.topAnchor, left: customView.leftAnchor, bottom:customView.bottomAnchor, right: customView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: customView.frame.width, height: customView.frame.height)
         customView.centerXAnchor.constraint(equalTo: imageView.centerXAnchor).isActive = true
-        let renderer = UIGraphicsImageRenderer(size: CGSize.init(width: 200, height: 200))
-        let image = renderer.image { (ctx) in
-            let rectange  = CGRect(x: 0, y: 0, width: 200, height: 200)
-            ctx.cgContext.setFillColor(UIColor.black.cgColor)
-            ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
-            ctx.cgContext.addRect(rectange)
-            ctx.cgContext.drawPath(using: .fillStroke)
-             
-            let tour = UIImage.init(named: "playstore")!
-            tour.draw(at: CGPoint.init(x: 50, y: 50))
-        }
-        
-         customView.addSubview(filterImageView)
-        self.filterImageView.image = UIImage.init(named: "playstore")!
-        self.filterImageView.frame = CGRect.init(x: self.imageView.center.x, y: self.imageView.center.y,  width:100, height:100)
+        imageView.addSubview(filterImageView)
+        filterImageView.frame = CGRect.init(x: self.imageView.center.x, y: self.imageView.center.y,  width:100, height:100)
+      
          
         
     }
+    func pixel(in image: UIImage, at point: CGPoint) -> (UInt8, UInt8, UInt8, UInt8)? {
+        let width = Int(image.size.width)
+        let height = Int(image.size.height)
+        let x = Int(point.x)
+        let y = Int(point.y)
+        guard x < width && y < height else {
+            return nil
+        }
+        guard let cfData:CFData = image.cgImage?.dataProvider?.data, let pointer = CFDataGetBytePtr(cfData) else {
+            return nil
+        }
+        let bytesPerPixel = 4
+        let offset = (x + y * width) * bytesPerPixel
+        return (pointer[offset], pointer[offset + 1], pointer[offset + 2], pointer[offset + 3])
+    }
+
+   
     
     @objc func goChoose(){
         ImagePickerManagerUpload().pickImage(self){ image in
@@ -194,25 +203,25 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
                 DispatchQueue.main.async {
                     let jsonDecoder = JSONDecoder()
                     self.filterData = try! jsonDecoder.decode([FilterProtocol].self, from: response as! Data)
-                    
                     self.dataArray.append(FilterModal.init(title: "FX 1" , iconUrl: "none", previewUrl: "none"))
                     for (index,filter)  in (self.filterData as NSArray as! [FilterProtocol]).enumerated() {
                         self.dataArray.append(FilterModal.init(title: "FX " + String(index + 2), iconUrl: filter.overlayUrl!, previewUrl: filter.overlayPreviewIconUrl!))
                         
                     }
                     self.filterCV.reloadData()
-                    /* let filterModel = KeyFilter()
-                     self.realmFilter.beginWrite()
-                     
-                     for filter in (self.filterData as NSArray as! [FilterProtocol]) {
-                     
-                     filterModel.name = filter.overlayName
-                     filterModel.id =  "\(filter.overlayId!)"
-                     filterModel.previewIcon = filter.overlayPreviewIconUrl
-                     filterModel.icon = filter.overlayUrl
-                     self.realmFilter.add(filterModel)
-                     print(filterModel.name)
-                     } */
+                    
+                    let filterModel = KeyFilter()
+                    self.realmFilter.beginWrite()
+                    
+                    for filter in (self.filterData as NSArray as! [FilterProtocol]) {
+                        
+                        filterModel.name = filter.overlayName
+                        filterModel.id =  "\(filter.overlayId!)"
+                        filterModel.previewIcon = filter.overlayPreviewIconUrl
+                        filterModel.icon = filter.overlayUrl
+                        self.realmFilter.add(filterModel)
+                        print(filterModel.name!)
+                    }
                     
                 }
             })
@@ -227,36 +236,106 @@ class Filters: UIViewController ,UIGestureRecognizerDelegate {
         }
     }
     @objc func handleRotation(sender: UIRotationGestureRecognizer) {
-           guard sender.view != nil else { return }
-           
-           if sender.state == .began || sender.state == .changed {
-               sender.view?.transform = sender.view!.transform.rotated(by: sender.rotation)
-               sender.rotation = 0
-           }
-       }
+        guard sender.view != nil else { return }
+        
+        if sender.state == .began || sender.state == .changed {
+            sender.view?.transform = sender.view!.transform.rotated(by: sender.rotation)
+            sender.rotation = 0
+        }
+    }
     @objc func handlePan(_ pan: UIPanGestureRecognizer) {
-           if pan.state == .began {
+        if pan.state == .began {
             self.initialCenterPoint = self.filterImageView.center
-           }
+        }
+        
+        let translation = pan.translation(in: view)
+        
+        if pan.state != .cancelled {
+            let newCenter = CGPoint(x: initialCenterPoint.x + translation.x, y: initialCenterPoint.y + translation.y)
+            self.filterImageView.center = newCenter
+        } else {
+            self.filterImageView.center = initialCenterPoint
+        }
+    }
+    
+    func setupLayout() {
+        NSLayoutConstraint.activate([
+            self.filterImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            self.filterImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            self.filterImageView.widthAnchor.constraint(equalToConstant: 200),
+            self.filterImageView.heightAnchor.constraint(equalToConstant: 200)
+        ])
+    }
+    @IBAction func makeHistogram(_ sender: UIBarButtonItem) {
+        convertHistogram()
+    }
+    @objc func convertHistogram(){
            
-           let translation = pan.translation(in: view)
-           
-           if pan.state != .cancelled {
-               let newCenter = CGPoint(x: initialCenterPoint.x + translation.x, y: initialCenterPoint.y + translation.y)
-               self.filterImageView.center = newCenter
-           } else {
-               self.filterImageView.center = initialCenterPoint
-           }
-       }
-       
-       func setupLayout() {
-           NSLayoutConstraint.activate([
-               self.filterImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-               self.filterImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-               self.filterImageView.widthAnchor.constraint(equalToConstant: 200),
-               self.filterImageView.heightAnchor.constraint(equalToConstant: 200)
-           ])
-       }
+         let sourceCGImage = imageView.image?.cgImage
+               let histData = calculateHistogram(fromImage: sourceCGImage!)
+               let imageHist = CIImage(cgImage: imageFromARGB32Bitmap(pixels: histData, width: 256, height: 1)!)
+               
+               let histImage = histogramDisplayFilter(imageHist, height: 200, highLimit: 1.0, lowLimit: 0.0)
+               let cgImage = context.createCGImage(histImage!, from: histImage!.extent)
+               let uiImage = UIImage(cgImage: cgImage!)
+        
+        histogramView.image = uiImage
+        imageView.addSubview(histogramView)
+        histogramView.anchor(top: nil, left: nil, bottom:imageView.bottomAnchor, right: imageView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 50)
+        histogramView.frame = CGRect.init(x: 0, y: 0, width: 100, height: 50)
+         
+    }
+    func histogramDisplayFilter(_ input: CIImage, height: Float = 100, highLimit: Float = 1.0, lowLimit: Float = 0.0) -> CIImage?
+    {
+        let filter = CIFilter(name:"CIHistogramDisplayFilter")
+        filter?.setValue(input,     forKey: kCIInputImageKey)
+        filter?.setValue(height,    forKey: "inputHeight")
+        filter?.setValue(highLimit, forKey: "inputHighLimit")
+        filter?.setValue(lowLimit,  forKey: "inputLowLimit")
+        return filter?.outputImage
+    }
+    
+    func calculateHistogram(fromImage image: CGImage) -> [PixelData] {
+    
+        var hist : [IntData] = Array(repeating: IntData(), count: 256)
+        
+        let pixelData = image.dataProvider!.data
+        let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
+        
+        for i in 0..<Int(image.width * image.width) {
+            hist[ Int(data[i*4+0]) ].r += 1
+            hist[ Int(data[i*4+1]) ].g += 1
+            hist[ Int(data[i*4+2]) ].b += 1
+        }
+        let maxValue : Int = hist.reduce(0) { max($0, $1.maxRGB) }
+        return hist.map { PixelData($0, div: maxValue) }
+    }
+    func imageFromARGB32Bitmap(pixels: [PixelData], width: Int, height: Int) -> CGImage? {
+        
+        guard width > 0 && height > 0 else             { return nil }
+        guard pixels.count == width * height else     { return nil }
+        let size = MemoryLayout<PixelData>.size
+        var data = pixels
+        guard let provider = CGDataProvider(data: NSData(bytes: &data, length: data.count * size) )
+            else { return nil }
+        
+        guard let cgImage = CGImage(
+            width:                 width,
+            height:             height,
+            bitsPerComponent:     8 * size / 4,
+            bitsPerPixel:         8 * size,
+            bytesPerRow:         width * size,
+            space:                 CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo:         CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue),
+            provider:             provider,
+            decode:             nil,
+            shouldInterpolate:     true,
+            intent:             .defaultIntent
+            )
+            else { return nil }
+        
+        return cgImage
+    }
 }
 extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate{
     
@@ -274,7 +353,6 @@ extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
         }
         if (self.dataArray[indexPath.row].previewUrl  != ""){
             let imageURL = self.dataArray[indexPath.row].previewUrl
-            print(imageURL)
             if Network.isConnectedToNetwork() == true {
                 Alamofire.request(imageURL).responseImage { response in
                     if let image = response.result.value {
@@ -288,17 +366,21 @@ extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
         if self.dataArray[indexPath.item].title != ""{
             cell.nameTitle.text = self.dataArray[indexPath.item].title
         }
-        
         return cell
     }
-    private func drawLogoIn(_ image: UIImage, _ logo: UIImage, position: CGPoint) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: image.size)
-        return renderer.image { context in
-            image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
-            logo.draw(in: CGRect(origin: position, size: logo.size))
-        }
+    func imageRecolor(image: UIImage, withColor color: UIColor) -> UIImage {
+    UIGraphicsBeginImageContextWithOptions(CGSize.init(width: image.size.width, height: image.size.height), false, image.scale)
+        let context = UIGraphicsGetCurrentContext()
+        color.set()
+    context!.translateBy(x: 0, y: image.size.height)
+    context!.scaleBy(x: 1, y: -1)
+    let rect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+    context!.clip(to: rect, mask: image.cgImage!)
+    context!.fill(rect)
+        let coloredImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+    return coloredImage!
     }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if  let cell = collectionView.cellForItem(at: indexPath) as? FilterCell {
@@ -310,20 +392,16 @@ extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
                     let imageURL = cell.iconUrl!
                     Alamofire.request(imageURL).responseImage { response in
                         if let image = response.result.value {
-                            //cell.iconView.image = image
-                            
                             
                             self.filterImageView.image = image
                             self.filterImageView.frame = CGRect.init(x: self.imageView.center.x, y: self.imageView.center.y,  width: 200, height: 200)
                             self.filterImageView.translatesAutoresizingMaskIntoConstraints = false
-                            self.filterImageView.transform = CGAffineTransform(scaleX: 2, y: 2)
-                            self.filterImageView.transform = CGAffineTransform(translationX: -256, y: -256)
-                            self.filterImageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-                            self.filterImageView.transform = CGAffineTransform.identity
+                            self.filterImageView.isUserInteractionEnabled = true
+                            self.filterImageView.isMultipleTouchEnabled = true
                             
-                            self.customView.addSubview(self.filterImageView)
-                            self.customView.centerXAnchor.constraint(equalTo: self.filterImageView.centerXAnchor).isActive = true
-                            self.customView.centerYAnchor.constraint(equalTo: self.filterImageView.centerYAnchor).isActive = true
+                            self.imageView.addSubview(self.filterImageView)
+                            self.imageView.centerXAnchor.constraint(equalTo: self.filterImageView.centerXAnchor).isActive = true
+                            self.imageView.centerYAnchor.constraint(equalTo: self.filterImageView.centerYAnchor).isActive = true
                             
                             let rotate = UIRotationGestureRecognizer(target: self, action: #selector(self.handleRotation(sender:)))
                             self.filterImageView.addGestureRecognizer(rotate)
@@ -331,72 +409,26 @@ extension Filters : UICollectionViewDelegateFlowLayout, UICollectionViewDataSour
                             self.filterImageView.addGestureRecognizer(pinch)
                             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePan(_:)))
                             self.filterImageView.addGestureRecognizer(panGesture)
-                            
-                            self.filterImageView.isUserInteractionEnabled = true
-                            self.filterImageView.isMultipleTouchEnabled = true
-                            
+                               
                         }
                     }
                 }
             }else  if indexPath.row == 0{
                 
-               self.imageView.addSubview(self.filterImageView)
+                self.imageView.addSubview(self.filterImageView)
                 self.filterImageView.frame = CGRect.init(x: self.imageView.center.x, y: self.imageView.center.y,  width: 200, height: 200)
                 self.filterImageView.image =  UIImage()
                 
             }
-            /*
-             imageView.image = UIImage(cgImage: cgImage,
-             scale: cell.iconView.image!.scale,
-             orientation:  cell.iconView.image!.imageOrientation)
-             */
             
         }
-    }
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
-    func saveImage(image: UIImage) -> Bool {
-        guard let data = image.jpegData(compressionQuality: 1) ?? image.pngData() else {
-            return false
-        }
-        guard let directory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) as NSURL else {
-            return false
-        }
-        do {
-            try data.write(to: directory.appendingPathComponent("fileName.png")!)
-            return true
-        } catch {
-            print(error.localizedDescription)
-            return false
-        }
-    }
-}
-extension UIView {
-
-    func asImage() -> UIImage? {
-        if #available(iOS 10.0, *) {
-            let renderer = UIGraphicsImageRenderer(bounds: bounds)
-            return renderer.image { rendererContext in
-                layer.render(in: rendererContext.cgContext)
-            }
-        } else {
-            UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0)
-            defer { UIGraphicsEndImageContext() }
-            guard let currentContext = UIGraphicsGetCurrentContext() else {
-                return nil
-            }
-            self.layer.render(in: currentContext)
-            return UIGraphicsGetImageFromCurrentImageContext()
-        }
-    }
-       
-}
+    } 
+     
+} 
 class ImagePickerManagerUpload : NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     var picker = UIImagePickerController();
-    var alert = UIAlertController(title: "Fotoğraf Seçin", message: nil, preferredStyle: .actionSheet)
+    var alert = UIAlertController(title: "Select Photo", message: nil, preferredStyle: .actionSheet)
     var viewController: UIViewController?
     var pickImageCallback : ((UIImage) -> ())?;
     
@@ -407,11 +439,11 @@ class ImagePickerManagerUpload : NSObject, UIImagePickerControllerDelegate, UINa
     func pickImage(_ viewController: UIViewController, _ callback: @escaping ((UIImage) -> ())) {
         pickImageCallback = callback
         self.viewController = viewController
-        let galleryAction = UIAlertAction(title: "Fotoğraflarım", style: .default){
+        let galleryAction = UIAlertAction(title: "Photos", style: .default){
             UIAlertAction in
             self.openGallery()
         }
-        let cancelAction = UIAlertAction(title: "İptal", style: .cancel){
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel){
             UIAlertAction in
         }
         picker.delegate = self
